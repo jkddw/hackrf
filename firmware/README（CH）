@@ -16,20 +16,20 @@ https://github.com/mossmann/libopencm3
 子模块：
 
 $ cd ..
-$ git子模块init
-$ git子模块更新
-$ cd firmware / libopencm3
+$ git submodule init
+$ git submodule update
+$ cd firmware/libopencm3
 $ make
-
 
 为HackRF One构建和安装标准固件映像：
 
 $ cd hackrf_usb
-$ mkdir构建
-$ cd构建
+$ mkdir build
+$ cd build
 $ cmake ..
 $ make
 $ hackrf_spiflash -w hackrf_usb.bin
+
 
 如果您有Jawbreaker，请将-DBOARD = JAWBREAKER添加到cmake命令中。
 如果您有rad1o，请改用-DBOARD = RAD1O。
