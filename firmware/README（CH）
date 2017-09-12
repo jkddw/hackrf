@@ -1,0 +1,54 @@
+USB HackRF设备的主要固件源代码是hackrf_usb。大多数
+其他目录包含用于测试和开发的固件源代码。
+公共目录包含多个HackRF固件共享的源代码
+项目。 cpld目录包含CPLD的HDL源。
+
+
+该固件设置为使用GCC工具链进行编译：
+
+https://developer.arm.com/open-source/gnu-toolchain/gnu-rm/downloads
+
+所需依赖关系
+
+https://github.com/mossmann/libopencm3
+
+如果您使用git，则首选安装libopencm3的方法是使用
+子模块：
+
+$ cd ..
+$ git子模块init
+$ git子模块更新
+$ cd firmware / libopencm3
+$ make
+
+
+为HackRF One构建和安装标准固件映像：
+
+$ cd hackrf_usb
+$ mkdir构建
+$ cd构建
+$ cmake ..
+$ make
+$ hackrf_spiflash -w hackrf_usb.bin
+
+如果您有Jawbreaker，请将-DBOARD = JAWBREAKER添加到cmake命令中。
+如果您有rad1o，请改用-DBOARD = RAD1O。
+
+
+可以使用USB设备固件升级（DFU）方式加载
+固件进入RAM。通常只需要恢复具有的设备
+加载了错误的固件，但它也可能对固件开发人员有用。
+
+要使用DFU将固件加载到RAM中，您将需要：
+
+http://dfu-util.sourceforge.net/
+
+要在DFU模式下启动HackRF One，请在通电的同时按住DFU按钮
+按或解除RESET按钮。释放DFU按钮
+3V3 LED点亮后。
+
+构建固件时，默认构建了.dfu文件。或者也可以
+从发行包中使用已知的好的.dfu文件。将固件加载到RAM中
+有：
+
+$ dfu-util --device 1fc9：000c --alt 0 --download hackrf_usb.dfu
